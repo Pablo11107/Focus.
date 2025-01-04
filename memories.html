@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memories - Instant Pictures</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" 
+    rel="stylesheet"
+  >
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1f1f1f;
+      color: #fff;
+    }
+
+    /* Encabezado */
+    .header {
+      background-color: #000;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    .header h1 a {
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .header h1 a:hover {
+      color: #ccc;
+    }
+
+    /* Sección de fotos instantáneas */
+    .main-section {
+      background-color: #2c2c2c;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .main-section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .instant-pictures {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #1f1f1f;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 600px;
+      height: 400px;
+      margin: 0 auto 1.5rem;
+      overflow: hidden;
+    }
+
+    .camera-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+      height: 100%;
+    }
+
+    #video {
+      border: 2px solid #fff;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      height: 250px;
+    }
+
+    #canvas {
+      display: none;
+    }
+
+    .camera-buttons {
+      margin-top: 1rem;
+    }
+
+    /* Botón de captura */
+    .camera-buttons button {
+      width: 60px;
+      height: 60px;
+      background-color: #fff;
+      border: 3px solid #ccc;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.3s;
+    }
+
+    .camera-buttons button:hover {
+      background-color: #f0f0f0;
+      transform: scale(1.1);
+    }
+
+    .camera-buttons button:active {
+      background-color: #ddd;
+      transform: scale(0.95);
+    }
+
+    /* Sección de fotos recientes */
+    .photos-section {
+      text-align: center;
+      padding: 2rem 1rem;
+      background-color: #2c2c2c;
+    }
+
+    .photos-section h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    /* Grid de fotos */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .photo-item {
+      background-color: #1f1f1f;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px;
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #000;
+      padding: 1rem 0;
+      text-align: center;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .nav-item {
+      text-align: center;
+    }
+
+    .nav-item a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .nav-item span {
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .image {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #444;
+    }
+
+    .image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header class="header">
+    <h1>
+      <a href="focus.html">Focus.</a>
+    </h1>
+  </header>
+
+  <!-- Sección principal -->
+  <section class="main-section">
+    <h2>Instant Pictures</h2>
+    <div class="instant-pictures">
+      <div class="camera-container">
+        <video id="video" autoplay></video>
+        <canvas id="canvas"></canvas>
+        <div class="camera-buttons">
+          <button id="snap"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de fotos recientes -->
+  <section class="photos-section">
+    <h3>Focus. lately in photos</h3>
+    <div class="photos-grid">
+      <div class="photo-item"><img src="" alt="Photo"></div>
+      <div class="photo-item"><img src="" alt="Photo"></div>
+      <div class="photo-item"><img src="" alt="Photo"></div>
+      <div class="photo-item"><img src="" alt="Photo"></div>
+      <div class="photo-item"><img src="" alt="Photo"></div>
+      <div class="photo-item"><img src="" alt="Photo"></div>
+      <div class="photo-item"><img src="" alt="Photo"></div>
+      <div class="photo-item"><img src="" alt="Photo"></div>
+      <div class="photo-item"><img src="" alt="Photo"></div>
+      <div class="photo-item"><img src="" alt="Photo"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <nav class="bottom-nav">
+      <div class="nav-item">
+        <a href="memories.html">
+          <div class="image"><img src="memories.webp" alt="Memories"></div>
+          <span>Memories.</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="socialclub.html">
+          <div class="image"><img src="person.png" alt="Socialclub"></div>
+          <span>Socialclub.</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="communities.html">
+          <div class="image"><img src="communities.png" alt="Communities"></div>
+          <span>Communities.</span>
+        </a>
+      </div>
+    </nav>
+  </footer>
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const snapButton = document.getElementById('snap');
+    const photoItems = document.querySelectorAll('.photo-item img');
+    const context = canvas.getContext('2d');
+
+    let photos = JSON.parse(localStorage.getItem('photos')) || [];
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => video.srcObject = stream);
+
+    snapButton.addEventListener('click', () => {
+      canvas.width = 300;
+      canvas.height = 200;
+      context.drawImage(video, 0, 0, 300, 200);
+      const imgUrl = canvas.toDataURL('image/jpeg', 0.5);
+      photos.unshift(imgUrl);
+      photos = photos.slice(0, 10);
+      localStorage.setItem('photos', JSON.stringify(photos));
+      photoItems.forEach((img, i) => img.src = photos[i] || '');
+    });
+  </script>
+</body>
+</html>

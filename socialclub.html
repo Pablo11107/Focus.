@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Socialclub - Share Your Thoughts</title>
+
+  <!-- Fuente Inter desde Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" 
+    rel="stylesheet"
+  >
+
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1f1f1f; /* Fondo oscuro de la página */
+      color: #fff;
+    }
+
+    /* Encabezado principal */
+    .header {
+      background-color: #000;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+    .header h1 a {
+      text-decoration: none;
+      color: #fff;
+    }
+    .header h1 a:hover {
+      color: #ccc;
+    }
+
+    /* Caja para compartir publicación */
+    .share-box {
+      background-color: #2c2c2c;
+      color: #fff;
+      margin: 1.5rem auto;
+      padding: 1rem;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .share-box textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 1rem;
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      background-color: #1f1f1f;
+      color: #fff;
+      font-size: 1rem;
+      resize: none;
+    }
+    .share-box textarea::placeholder {
+      color: #aaa;
+    }
+    .file-upload {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .file-upload label {
+      background-color: #444;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    .file-upload label:hover {
+      background-color: #666;
+    }
+    .file-upload input[type="file"] {
+      display: none;
+    }
+    .share-box button {
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #57e32c;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .share-box button:hover {
+      background-color: #45c229;
+    }
+
+    /* Contenedor de publicaciones */
+    #postsContainer {
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Estilo de cada Post */
+    .post {
+      background-color: #2f2f2f; /* Fondo gris oscuro general del post */
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+
+    /* Encabezado de la publicación */
+    .post-top {
+      background-color: #bcbcbc; /* Gris claro para la franja superior */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+    }
+    .post-info {
+      display: flex;
+      align-items: center;
+    }
+    .post-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 0.8rem;
+    }
+    .post-username {
+      font-weight: 700;
+      color: #000;  /* Texto negro sobre fondo gris claro */
+    }
+    .post-brand {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #000;
+    }
+
+    /* Contenido de la publicación */
+    .post-body {
+      background-color: #fff; /* Fondo blanco para el contenido */
+      color: #000;           /* Texto negro */
+      padding: 1rem;
+    }
+    .post-body p {
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .post-body img {
+      width: 100%;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #000;
+      padding: 1rem 0;
+      text-align: center;
+    }
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .nav-item {
+      text-align: center;
+    }
+    .nav-item a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #fff;
+    }
+    .nav-item span {
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+    .nav-item a:hover {
+      color: #ccc;
+    }
+
+    .image {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+      border-radius: 50%;
+      background-color: #444;
+    }
+    .image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado principal -->
+  <header class="header">
+    <h1>
+      <a href="focus.html">Focus.</a>
+    </h1>
+  </header>
+
+  <!-- Caja para compartir reflexiones -->
+  <section class="share-box">
+    <textarea id="postText" placeholder="Share your Focus. thoughts..."></textarea>
+    <div class="file-upload">
+      <label for="postImage">📷 Attach Image</label>
+      <input type="file" id="postImage" accept="image/*">
+    </div>
+    <button id="postButton">Post</button>
+  </section>
+
+  <!-- Contenedor donde se mostrarán los posts -->
+  <section id="postsContainer"></section>
+
+  <!-- Footer con navegación inferior -->
+  <footer class="footer">
+    <nav class="bottom-nav">
+      <div class="nav-item">
+        <a href="memories.html">
+          <div class="image">
+            <img src="memories.webp" alt="Memories">
+          </div>
+          <span>Memories.</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="socialclub.html">
+          <div class="image">
+            <img src="person.png" alt="Socialclub">
+          </div>
+          <span>Socialclub.</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="communities.html">
+          <div class="image">
+            <img src="communities.png" alt="Communities">
+          </div>
+          <span>Communities.</span>
+        </a>
+      </div>
+    </nav>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const postText = document.getElementById('postText');
+    const postImage = document.getElementById('postImage');
+    const postButton = document.getElementById('postButton');
+    const postsContainer = document.getElementById('postsContainer');
+
+    // Cargamos los posts almacenados
+    let posts = JSON.parse(localStorage.getItem('socialPosts')) || [];
+
+    // Función para renderizar los posts en el contenedor
+    function renderPosts() {
+      // Construimos el HTML de cada post con el nuevo estilo
+      postsContainer.innerHTML = posts.map(post => `
+        <article class="post">
+          <!-- Cabecera gris con avatar, usuario y la marca F. -->
+          <div class="post-top">
+            <div class="post-info">
+              <img src="default-avatar.jpg" alt="Avatar" class="post-avatar">
+              <span class="post-username">@FocusUser</span>
+            </div>
+            <span class="post-brand">F.</span>
+          </div>
+
+          <!-- Cuerpo blanco con texto e imagen -->
+          <div class="post-body">
+            <p>${post.text}</p>
+            ${
+              post.image 
+              ? `<img src="${post.image}" alt="Post Image">` 
+              : ''
+            }
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Función para guardar el post
+    function savePost() {
+      const textValue = postText.value.trim();
+      if (!textValue && !postImage.files[0]) {
+        return; // No guardamos un post vacío
+      }
+
+      // Convertir imagen a Base64 si existe
+      if (postImage.files[0]) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          // Creamos el objeto del post
+          const newPost = {
+            text: textValue,
+            image: reader.result
+          };
+          // Agregamos el post al inicio
+          posts.unshift(newPost);
+          // Guardamos en localStorage
+          localStorage.setItem('socialPosts', JSON.stringify(posts));
+          // Renderizamos
+          renderPosts();
+          // Reseteamos
+          postText.value = '';
+          postImage.value = '';
+        };
+        reader.readAsDataURL(postImage.files[0]);
+      } else {
+        // Solo texto
+        posts.unshift({ text: textValue, image: null });
+        localStorage.setItem('socialPosts', JSON.stringify(posts));
+        renderPosts();
+        postText.value = '';
+      }
+    }
+
+    // Manejar el clic en el botón "Post"
+    postButton.addEventListener('click', savePost);
+
+    // Renderizar al inicio
+    renderPosts();
+  </script>
+</body>
+</html>
