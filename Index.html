@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Focus - Main Page</title>
+  
+  <!-- Fuente Inter desde Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" 
+    rel="stylesheet"
+  >
+  
+  <style>
+    /* Reset simple */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif; 
+      background-color: #2c2c2c; 
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    /* Header */
+    .header {
+      background-color: #000;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .header h1 a {
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    /* Sección: Year progress */
+    .year-progress-section {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .year-progress-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    #yearProgressLabel {
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    /* Barra de progreso base */
+    .progress-container {
+      width: 80%;
+      margin: 0 auto;
+      background-color: #3a3a3a; 
+      border-radius: 50px;
+      height: 24px;
+      position: relative;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%; 
+      background-color: #57e32c; 
+      border-radius: 50px;
+      transition: width 0.5s ease;
+    }
+    .progress-container.small {
+      height: 14px;
+    }
+
+    /* Sección: categorías */
+    .categories-section {
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .categories-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Tarjetas de cada categoría */
+    .category-card {
+      background-color: #1f1f1f;
+      padding: 1rem;
+      border-radius: 8px;
+      cursor: pointer; 
+      transition: background-color 0.3s;
+    }
+    .category-card:hover {
+      background-color: #333;
+    }
+    .category-card img {
+      width: 100%;
+      height: 150px;       
+      object-fit: cover;   
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+    .category-card p {
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+    }
+
+    /* Sección: botones y opciones */
+    .next-actions-section {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .next-actions-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    .btn.action-btn {
+      display: block;
+      width: 70%;
+      margin: 0.5rem auto;
+      padding: 1rem;
+      background-color: #999;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: 600;
+    }
+    .btn.action-btn:hover {
+      background-color: #bbb;
+    }
+
+    /* Icono de configuración */
+    .settings-icon {
+      margin-top: 2rem;
+    }
+    .settings-icon .gear {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background-color: #666;
+      border-radius: 10px;
+      position: relative;
+    }
+    .settings-icon .gear::before,
+    .settings-icon .gear::after {
+      content: '';
+      position: absolute;
+      background-color: #444;
+      border-radius: 50%;
+    }
+    .settings-icon .gear::before {
+      width: 8px;
+      height: 8px;
+      left: calc(50% - 4px);
+      top: calc(50% - 4px);
+    }
+    .settings-icon .gear::after {
+      width: 6px;
+      height: 6px;
+      left: calc(50% - 3px);
+      top: calc(50% - 3px);
+      background-color: #222;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #000;
+      padding: 1rem 0;
+    }
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .nav-item {
+      text-align: center;
+      cursor: pointer;
+    }
+    .nav-item a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #fff;
+    }
+    .nav-item a:hover {
+      color: #ccc; 
+    }
+    .nav-item .image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 48px; 
+      height: 48px;
+      margin-bottom: 0.5rem; 
+      overflow: hidden;
+      border-radius: 50%; 
+      background-color: #444;
+    }
+    .nav-item .image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .nav-item span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      margin-top: 0.2rem;
+    }
+
+    /* Modal para Dieta y prayed (Yes/No) */
+    .modal-overlay, .modal-overlay-minutes, .modal-overlay-profile {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0,0,0,0.6);
+      z-index: 999;
+    }
+    .modal, .modal-minutes, .modal-profile {
+      background-color: #1f1f1f;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 90%;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .modal {
+      width: 280px;
+    }
+    .modal-minutes {
+      width: 280px;
+    }
+    .modal-profile {
+      width: 300px;
+    }
+    .modal h3, .modal-minutes h3, .modal-profile h3 {
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    /* Botones, selects, inputs en modals */
+    .modal button, .modal-minutes button, .modal-profile button {
+      background-color: #57e32c;
+      border: none;
+      color: #000;
+      font-weight: 700;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 1rem;
+    }
+    .modal button:hover, .modal-minutes button:hover, .modal-profile button:hover {
+      background-color: #45c229;
+    }
+
+    .modal .close-btn, 
+    .modal-minutes .close-minutes-btn,
+    .modal-profile .close-profile-btn {
+      margin-left: auto;
+      background-color: #888;
+      color: #000;
+      font-size: 0.7rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+    .modal .close-btn:hover, 
+    .modal-minutes .close-minutes-btn:hover,
+    .modal-profile .close-profile-btn:hover {
+      background-color: #666;
+    }
+
+    .modal select, 
+    .modal-minutes input[type="number"], 
+    .modal-profile input[type="text"], 
+    .modal-profile textarea,
+    .modal-profile input[type="file"] {
+      width: 100%;
+      padding: 0.5rem;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 1rem;
+    }
+    .modal-profile label {
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header class="header">
+    <h1>
+      <a href="focus.html" style="text-decoration: none; color: #fff;">Focus.</a>
+    </h1>
+  </header>
+
+  <!-- Sección: Barra de progreso anual -->
+  <section class="year-progress-section">
+    <h2>Year progress bar.</h2>
+    <div class="progress-container">
+      <div class="progress-bar" id="yearProgressBar"></div>
+    </div>
+    <p id="yearProgressLabel">
+      You have improved <span id="yearProgressValue">-</span>% and you know that the work is not finished.
+    </p>
+  </section>
+
+  <!-- Sección: Progresión por categorías -->
+  <section class="categories-section">
+    <h2>Progression by categories.</h2>
+    <div class="categories-grid">
+
+      <!-- Leer (1%/20 min) -->
+      <div class="category-card" data-cat="read">
+        <img src="Read.jpeg" alt="Reading progress">
+        <p>You've read <span class="progress-percent" id="readValue">0</span>% more than yourself from a year ago</p>
+        <div class="progress-container small">
+          <div class="progress-bar" id="readProgressBar"></div>
+        </div>
+      </div>
+      
+      <!-- Entrenar (1%/60 min) -->
+      <div class="category-card" data-cat="trained">
+        <img src="Trained.jpeg" alt="Training progress">
+        <p>You've trained <span class="progress-percent" id="trainedValue">0</span>% more than yourself from a year ago</p>
+        <div class="progress-container small">
+          <div class="progress-bar" id="trainedProgressBar"></div>
+        </div>
+      </div>
+
+      <!-- Meditar (1%/10 min) -->
+      <div class="category-card" data-cat="meditated">
+        <img src="Meditated.jpg" alt="Meditation progress">
+        <p>You've meditated <span class="progress-percent" id="meditatedValue">0</span>% more than yourself from a year ago</p>
+        <div class="progress-container small">
+          <div class="progress-bar" id="meditatedProgressBar"></div>
+        </div>
+      </div>
+
+      <!-- Trabajar (1%/60 min) -->
+      <div class="category-card" data-cat="worked">
+        <img src="Worked.jpeg" alt="Work progress">
+        <p>You've worked <span class="progress-percent" id="workedValue">0</span>% more than yourself from a year ago</p>
+        <div class="progress-container small">
+          <div class="progress-bar" id="workedProgressBar"></div>
+        </div>
+      </div>
+
+      <!-- Rezar (Yes/No) -->
+      <div class="category-card" data-cat="prayed">
+        <img src="prayed.jpg" alt="Prayer progress">
+        <p>You've prayed <span class="progress-percent" id="prayedValue">0</span>% more than yourself from a year ago</p>
+        <div class="progress-container small">
+          <div class="progress-bar" id="prayedProgressBar"></div>
+        </div>
+      </div>
+
+      <!-- Dieta (Yes/No) -->
+      <div class="category-card" data-cat="diet">
+        <img src="diet.jpg" alt="Diet progress">
+        <p>You have improved your diet by <span class="progress-percent" id="dietValue">0</span>% since a year ago</p>
+        <div class="progress-container small">
+          <div class="progress-bar" id="dietProgressBar"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Sección: Botones y opciones -->
+  <section class="next-actions-section">
+    <h2>The show must go on so...</h2>
+    
+    <!-- Botón "Reset progress bars" -->
+    <button class="btn action-btn" id="resetBtn">Reset progress bars</button>
+
+    <!-- Botón "Upload profile information" -->
+    <button class="btn action-btn" id="uploadProfileBtn">Upload profile information</button>
+
+    <button class="btn action-btn">Log out</button>
+    
+    <!-- Icono de configuración (decorativo) -->
+    <div class="settings-icon">
+      <div class="gear"></div>
+    </div>
+  </section>
+
+  <!-- Footer con menú de navegación inferior -->
+  <footer class="footer">
+    <nav class="bottom-nav">
+      <div class="nav-item">
+        <a href="memories.html">
+          <div class="image">
+            <img src="memories.webp" alt="Memories">
+          </div>
+          <span>Memories.</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="socialclub.html">
+            <div class="image">
+              <img src="person.png" alt="socialclub">
+            </div>
+            <span>Socialclub.</span>
+          </a>
+      </div>
+      <div class="nav-item">
+        <a href="communities.html">
+            <div class="image">
+              <img src="communities.png" alt="communities">
+            </div>
+            <span>Communities.</span>
+          </a>
+      </div>
+    </nav>
+  </footer>
+
+  <!-- Modal: Yes/No (prayed, diet) -->
+  <div class="modal-overlay" id="yesNoModal">
+    <div class="modal">
+      <button class="close-btn" id="closeYesNoModal">X</button>
+      <h3 id="yesNoModalTitle">Have you followed your diet today?</h3>
+      <select id="yesNoSelect">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+      <button id="saveYesNoBtn">Save</button>
+    </div>
+  </div>
+
+  <!-- Modal: minutos para las demás categorías -->
+  <div class="modal-overlay-minutes" id="minutesModal">
+    <div class="modal-minutes">
+      <button class="close-minutes-btn" id="closeMinutesModal">X</button>
+      <h3 id="minutesModalTitle">How many minutes did you spend?</h3>
+      <input type="number" min="0" id="minutesInput" />
+      <button id="saveMinutesBtn">Save</button>
+    </div>
+  </div>
+
+  <!-- Modal: Profile Info -->
+  <div class="modal-overlay-profile" id="profileModal">
+    <div class="modal-profile">
+      <button class="close-profile-btn" id="closeProfileModal">X</button>
+      <h3>Upload Profile Information</h3>
+
+      <label for="realName">Real Name</label>
+      <input type="text" id="realName" placeholder="John Doe">
+
+      <label for="userName">Username</label>
+      <input type="text" id="userName" placeholder="johndoe123">
+
+      <label for="description">Description</label>
+      <textarea id="description" rows="3" placeholder="Tell us about yourself..."></textarea>
+
+      <label for="profilePic">Profile Picture</label>
+      <input type="file" id="profilePic" accept="image/*">
+
+      <button id="saveProfileBtn">Save</button>
+    </div>
+  </div>
+
+  <script>
+    // timeSpent para cada cat
+    let timeSpent = JSON.parse(localStorage.getItem('timeSpent')) || {
+      read: 0,
+      trained: 0,
+      meditated: 0,
+      worked: 0,
+      prayedYesCount: 0,
+      dietYesCount: 0
+    };
+
+    // Profile info
+    let profileInfo = JSON.parse(localStorage.getItem('profileInfo')) || {
+      realName: "",
+      userName: "",
+      description: "",
+      profilePic: ""
+    };
+
+    // Cálculo % en base a la catKey
+    function computeProgress(catKey) {
+      switch(catKey) {
+        case "read":
+          return Math.floor(timeSpent.read / 20);   // 1% / 20 min
+        case "trained":
+          return Math.floor(timeSpent.trained / 60);// 1% / 60 min
+        case "meditated":
+          return Math.floor(timeSpent.meditated / 10);// 1% / 10 min
+        case "worked":
+          return Math.floor(timeSpent.worked / 60);
+        case "prayed":
+          return timeSpent.prayedYesCount;          
+        case "diet":
+          return timeSpent.dietYesCount;           
+      }
+      return 0;
+    }
+
+    // Actualiza la barra y el texto de una categoría
+    function updateProgress(catKey) {
+      const val = computeProgress(catKey);
+      const finalVal = val > 400 ? 400 : val;
+
+      // Actualizar la barra
+      const barElem = document.getElementById(catKey + "ProgressBar");
+      if (barElem) barElem.style.width = finalVal + "%";
+      
+      // Actualizar el texto
+      const labelElem = document.getElementById(catKey + "Value");
+      if (labelElem) labelElem.textContent = finalVal;
+    }
+
+    // Calculamos la media de los 6 porcentajes para la barra principal
+    function updateYearBar() {
+      const cats = ["read","trained","meditated","worked","prayed","diet"];
+      let sum = 0;
+      cats.forEach(c => sum += computeProgress(c));
+      const avg = Math.floor(sum / cats.length);
+      const finalAvg = avg > 400 ? 400 : avg;
+      
+      const yearBar = document.getElementById("yearProgressBar");
+      const yearVal = document.getElementById("yearProgressValue");
+      if (yearBar) yearBar.style.width = finalAvg + "%";
+      if (yearVal) yearVal.textContent = finalAvg;
+    }
+
+    // Recalcula una categoría y después la barra principal
+    function recalcAll(catKey) {
+      updateProgress(catKey);
+      updateYearBar();
+    }
+
+    /* -- Modales prayed/diet -- */
+    const yesNoModal      = document.getElementById("yesNoModal");
+    const closeYesNoModal = document.getElementById("closeYesNoModal");
+    const yesNoModalTitle = document.getElementById("yesNoModalTitle");
+    const yesNoSelect     = document.getElementById("yesNoSelect");
+    const saveYesNoBtn    = document.getElementById("saveYesNoBtn");
+
+    function openYesNoModal(catKey) {
+      yesNoModal.style.display = "flex";
+      yesNoSelect.value = "Yes";
+      yesNoSelect.dataset.category = catKey;
+      yesNoModalTitle.textContent = (catKey === "prayed")
+        ? "Have you prayed today?"
+        : "Have you followed your diet today?";
+    }
+    function closeYesNo() {
+      yesNoModal.style.display = "none";
+    }
+    closeYesNoModal.addEventListener("click", closeYesNo);
+
+    saveYesNoBtn.addEventListener("click", () => {
+      const catKey = yesNoSelect.dataset.category;
+      const choice = yesNoSelect.value; 
+      if (choice === "Yes") {
+        if (catKey === "prayed") {
+          timeSpent.prayedYesCount++;
+          alert("Nice! +1% in prayed progress!");
+        } else {
+          timeSpent.dietYesCount++;
+          alert("Great job! +1% in diet progress!");
+        }
+      } else {
+        alert("No increment this time!");
+      }
+      localStorage.setItem('timeSpent', JSON.stringify(timeSpent));
+      recalcAll(catKey);
+      closeYesNo();
+    });
+
+    /* -- Modal Minutos -- */
+    const minutesModal      = document.getElementById("minutesModal");
+    const closeMinutesModal = document.getElementById("closeMinutesModal");
+    const minutesModalTitle = document.getElementById("minutesModalTitle");
+    const minutesInput      = document.getElementById("minutesInput");
+    const saveMinutesBtn    = document.getElementById("saveMinutesBtn");
+
+    function openMinutesModal(catKey) {
+      minutesModal.style.display = "flex";
+      minutesModalTitle.textContent = `How many minutes did you spend on ${catKey} today?`;
+      minutesInput.value = "";
+      minutesInput.focus();
+      minutesInput.dataset.category = catKey;
+    }
+    function closeModalMinutes() {
+      minutesModal.style.display = "none";
+    }
+    closeMinutesModal.addEventListener("click", closeModalMinutes);
+
+    saveMinutesBtn.addEventListener("click", () => {
+      const catKey = minutesInput.dataset.category;
+      const val = parseInt(minutesInput.value);
+      if (!isNaN(val) && val > 0) {
+        timeSpent[catKey] += val;
+        alert(`You have spent a total of ${timeSpent[catKey]} minutes on ${catKey}!`);
+        localStorage.setItem('timeSpent', JSON.stringify(timeSpent));
+        recalcAll(catKey);
+      }
+      closeModalMinutes();
+    });
+
+    /* -- Botón RESET -- */
+    const resetBtn = document.getElementById("resetBtn");
+    resetBtn.addEventListener("click", () => {
+      // Todos a 0
+      timeSpent.read          = 0;
+      timeSpent.trained       = 0;
+      timeSpent.meditated     = 0;
+      timeSpent.worked        = 0;
+      timeSpent.prayedYesCount= 0;
+      timeSpent.dietYesCount  = 0;
+
+      localStorage.setItem('timeSpent', JSON.stringify(timeSpent));
+
+      ["read","trained","meditated","worked","prayed","diet"].forEach(cat => {
+        updateProgress(cat);
+      });
+      updateYearBar();
+
+      alert("All progress bars have been reset to 0!");
+    });
+
+    /* -- Modal Profile -- */
+    const uploadProfileBtn    = document.getElementById("uploadProfileBtn");
+    const profileModal        = document.getElementById("profileModal");
+    const closeProfileModalBtn= document.getElementById("closeProfileModal");
+    const realNameInput       = document.getElementById("realName");
+    const userNameInput       = document.getElementById("userName");
+    const descriptionInput    = document.getElementById("description");
+    const profilePicInput     = document.getElementById("profilePic");
+    const saveProfileBtn      = document.getElementById("saveProfileBtn");
+
+    uploadProfileBtn.addEventListener("click", () => {
+      realNameInput.value    = profileInfo.realName || "";
+      userNameInput.value    = profileInfo.userName || "";
+      descriptionInput.value = profileInfo.description || "";
+      profilePicInput.value  = "";
+      profileModal.style.display = "flex";
+    });
+
+    closeProfileModalBtn.addEventListener("click", () => {
+      profileModal.style.display = "none";
+    });
+
+    saveProfileBtn.addEventListener("click", () => {
+      profileInfo.realName    = realNameInput.value.trim();
+      profileInfo.userName    = userNameInput.value.trim();
+      profileInfo.description = descriptionInput.value.trim();
+
+      const file = profilePicInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          profileInfo.profilePic = reader.result;
+          persistProfile();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        persistProfile();
+      }
+    });
+
+    function persistProfile() {
+      localStorage.setItem('profileInfo', JSON.stringify(profileInfo));
+      alert("Profile information saved!");
+      profileModal.style.display = "none";
+    }
+
+    /* -- Al cargar la página -- */
+    window.addEventListener("DOMContentLoaded", () => {
+      // Al inicio, calculamos la barra principal como la media de las 6 cats
+      updateYearBar();
+      // Luego actualizamos cada categoría
+      ["read","trained","meditated","worked","prayed","diet"].forEach(cat => {
+        updateProgress(cat);
+      });
+
+      // Eventos a cada tarjeta
+      document.querySelectorAll(".category-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const catKey = card.getAttribute("data-cat");
+          if (!catKey) return;
+
+          if (catKey === "prayed" || catKey === "diet") {
+            openYesNoModal(catKey);
+          } else {
+            openMinutesModal(catKey);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
